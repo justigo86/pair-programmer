@@ -65,3 +65,21 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+export const room = pgTable("room", {
+  // id: uuid("id")
+  //   .default(sql`gen_random_uuid()`)
+  //   .notNull()
+  //   .primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  //.reference calls to another table - in this case, users
+  //onDelete: cascade - if user is deleted, delete all rooms associated with account
+  name: text("name").notNull(),
+  description: text("description"),
+  tags: text("tags").notNull(),
+  githubRepo: text("githubRepo"),
+});
+
+export type Room = typeof room.$inferSelect;
