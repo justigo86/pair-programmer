@@ -83,3 +83,4 @@ export const room = pgTable("room", {
 });
 
 export type Room = typeof room.$inferSelect;
+//inferSelect is Drizzle schema type to select a table - requires typeof

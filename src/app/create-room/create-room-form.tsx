@@ -15,15 +15,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createRoomAction } from "./actions";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
-  description: z.string().min(1).max(50),
+  description: z.string().min(1).max(250),
   githubRepo: z.string().min(1).max(50),
   language: z.string().min(1).max(50),
+  tags: z.string().min(1).max(50),
 });
 
 export function CreateRoomForm() {
+  const router = useRouter();
+
   //create a zod form with useForm hook - can now call various methods with form.[]
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,10 +41,11 @@ export function CreateRoomForm() {
   });
 
   // define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     //store data in database
-
-    console.log(values);
+    await createRoomAction(values);
+    //create room and send the user to the homepage
+    router.push("/");
   }
 
   return (
