@@ -1,11 +1,13 @@
+import { sql } from "drizzle-orm";
 import {
   timestamp,
   pgTable,
   text,
   primaryKey,
   integer,
+  uuid,
 } from "drizzle-orm/pg-core";
-import type { AdapterAccount } from "next-auth/adapters";
+import type { AdapterAccount } from "@auth/core/adapters";
 
 //create table called testing
 export const testing = pgTable("testing", {
@@ -67,10 +69,10 @@ export const verificationTokens = pgTable(
 );
 
 export const room = pgTable("room", {
-  // id: uuid("id")
-  //   .default(sql`gen_random_uuid()`)
-  //   .notNull()
-  //   .primaryKey(),
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .notNull()
+    .primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -78,7 +80,7 @@ export const room = pgTable("room", {
   //onDelete: cascade - if user is deleted, delete all rooms associated with account
   name: text("name").notNull(),
   description: text("description"),
-  tags: text("tags").notNull(),
+  language: text("language").notNull(),
   githubRepo: text("githubRepo"),
 });
 

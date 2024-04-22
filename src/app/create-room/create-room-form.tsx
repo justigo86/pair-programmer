@@ -23,7 +23,6 @@ const formSchema = z.object({
   description: z.string().min(1).max(250),
   githubRepo: z.string().min(1).max(50),
   language: z.string().min(1).max(50),
-  tags: z.string().min(1).max(50),
 });
 
 export function CreateRoomForm() {
@@ -42,6 +41,7 @@ export function CreateRoomForm() {
 
   // define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values.name);
     //store data in database
     await createRoomAction(values);
     //create room and send the user to the homepage
