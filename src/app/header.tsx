@@ -7,25 +7,37 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { HeartHandshakeIcon, LogInIcon, LogOutIcon } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 
 function AccountDropdown() {
   const session = useSession();
   const isLoggedId = !!session.data;
+  //cast to boolean
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger> {session.data?.user?.name}</DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
+        <Button variant="link" className="text-lg">
+          <Avatar className="mr-2 h-8 w-8">
+            <AvatarImage src={session.data?.user?.image ?? ""} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          {session.data?.user?.name}
+        </Button>
+      </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {session.data ? (
+        {isLoggedId ? (
           <DropdownMenuItem onClick={() => signOut()}>
+            <LogOutIcon className="mr-2" />
             Sign Out
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem onClick={() => signIn("google")}>
+            <LogInIcon className="mr-2" />
             Sign In
           </DropdownMenuItem>
         )}
@@ -38,10 +50,16 @@ export function Header() {
   const session = useSession();
 
   return (
-    <header className="bg-gray-50 dark:bg-gray-900 py-4 container mx-auto">
+    <header className="bg-gray-200 dark:bg-gray-900 py-4 container mx-auto">
       <div className="flex items-center justify-between">
-        <div>LOGO</div>
-        <div>
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-xl hover:underline"
+        >
+          <HeartHandshakeIcon />
+          PairProgrammer
+        </Link>
+        <div className="flex items-center gap-2">
           <AccountDropdown />
           <ModeToggle />
         </div>
