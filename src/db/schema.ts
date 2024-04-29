@@ -80,7 +80,7 @@ export const room = pgTable("room", {
   //onDelete: cascade - if user is deleted, delete all rooms associated with account
   name: text("name").notNull(),
   description: text("description"),
-  language: text("language").notNull(),
+  tags: text("tags").notNull(),
   githubRepo: text("githubRepo"),
 });
 

@@ -12,31 +12,32 @@ export default async function RoomPage(props: { params: { roomid: string } }) {
     return <h1>Room not found</h1>;
   }
 
-  const languages = room.language.split(",").map((lang) => lang.trim());
+  const tags = room.tags.split(",").map((tag) => tag.trim());
 
   return (
     <div className="grid grid-cols-4 min-h-screen">
       <div className="col-span-3 p-4 pr-2">
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
+        <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4 min-h-screen">
           video player
         </div>
       </div>
       <div className="col-span-1 p-4 pl-2">
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
+        <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4 flex flex-col gap-3">
           <h1 className="text-base">{room.name}</h1>
           <p className="text-base text-gray-600">{room.description}</p>
-          <h3>Tags:</h3>
-          {languages.map((lang) => (
-            <Badge className="w-fit" key={lang}>
-              {lang}
-            </Badge>
-          ))}
+          <div className="flex gap-2 flex-wrap">
+            {tags.map((tag) => (
+              <Badge className="w-fit" key={tag}>
+                {tag}
+              </Badge>
+            ))}
+          </div>
           {room.githubRepo && (
             <Link
               href={room.githubRepo}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 self-center text-sm"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <GithubIcon />
               Github Project
