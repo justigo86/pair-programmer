@@ -15,7 +15,7 @@ import Link from "next/link";
 
 function AccountDropdown() {
   const session = useSession();
-  const isLoggedId = !!session.data;
+  // const isLoggedId = !!session.data;
   //cast to boolean
 
   return (
@@ -30,17 +30,17 @@ function AccountDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {isLoggedId ? (
-          <DropdownMenuItem onClick={() => signOut()}>
-            <LogOutIcon className="mr-2" />
-            Sign Out
-          </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem onClick={() => signIn("google")}>
-            <LogInIcon className="mr-2" />
-            Sign In
-          </DropdownMenuItem>
-        )}
+        <DropdownMenuItem
+          onClick={() =>
+            signOut({
+              callbackUrl: "/",
+              // any page in which the user signs out will send home - prevents errors
+            })
+          }
+        >
+          <LogOutIcon className="mr-2" />
+          Sign Out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -60,7 +60,15 @@ export function Header() {
           PairProgrammer
         </Link>
         <div className="flex items-center gap-2">
-          <AccountDropdown />
+          {session.data && ( //if user is signed in - account button
+            <AccountDropdown />
+          )}
+          {!session.data && ( //if user is not signed in - sign in button
+            <Button variant="link" onClick={() => signIn()}>
+              <LogInIcon />
+              Sign In
+            </Button>
+          )}
           <ModeToggle />
         </div>
       </div>
