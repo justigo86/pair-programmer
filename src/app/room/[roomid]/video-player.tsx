@@ -3,50 +3,57 @@
 import { Room } from "@/db/schema";
 import {
   Call,
+  CallControls,
+  SpeakerLayout,
   StreamCall,
+  StreamTheme,
   StreamVideo,
   StreamVideoClient,
-  User,
 } from "@stream-io/video-react-sdk";
+import "@stream-io/video-react-sdk/dist/css/styles.css";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { generateToken } from "./actions";
 
-const apiKey = process.env.GET_STREAM_API_KEY!;
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzViZWQwNTctOGMxMi00OTA3LWJiZTEtZTY4ODQ4MzhjZTVkIn0.X6J3RK5P6zd04wbDl8Gc3nsOW3JtjG5hn5QfnSzm15Q";
+const apiKey = process.env.NEXT_PUBLIC_GET_STREAM_API_KEY!;
 
-export default function VideoPlayer({ room }: { room: Room }) {
+export function VideoPlayer({ room }: { room: Room }) {
   const session = useSession();
   const [client, setClient] = useState<StreamVideoClient | null>(null);
   const [call, setCall] = useState<Call | null>(null);
 
   useEffect(() => {
-    if (!session.data) {
-      return;
-    }
-    const userId = session.data?.user?.id;
+    if (!room) return;
+    if (!session.data) return;
+
+    const userId = session.data.user.id;
     const client = new StreamVideoClient({
       apiKey,
       user: {
         id: userId,
       },
-      token,
+      tokenProvider: () => generateToken(),
     });
-    setClient(client);
     const call = client.call("default", room.id);
     call.join({ create: true });
+    setClient(client);
     setCall(call);
     return () => {
       call.leave();
       client.disconnectUser();
     };
-  }, [room.id, session]);
+  }, [session, room]);
 
   return (
     client &&
     call && (
       <StreamVideo client={client}>
-        <StreamCall call={call}></StreamCall>
+        <StreamTheme>
+          <StreamCall call={call}>
+            <SpeakerLayout />
+            <CallControls />
+          </StreamCall>
+        </StreamTheme>
       </StreamVideo>
     )
   );
