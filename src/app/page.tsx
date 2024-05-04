@@ -44,8 +44,12 @@ function RoomCard({ room }: { room: Room }) {
   );
 }
 
-export default async function Home() {
-  const rooms = await getRooms();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { search: string };
+}) {
+  const rooms = await getRooms(searchParams.search);
 
   return (
     <main className="min-h-screen p-16">
