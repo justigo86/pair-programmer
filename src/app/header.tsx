@@ -59,6 +59,13 @@ export function Header() {
           <HeartHandshakeIcon />
           PairProgrammer
         </Link>
+
+        <nav>
+          <Link className="hover:underline" href={"/your-rooms"}>
+            Your Rooms
+          </Link>
+        </nav>
+
         <div className="flex items-center gap-2">
           {session.data && ( //if user is signed in - account button
             <AccountDropdown />

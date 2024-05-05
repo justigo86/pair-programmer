@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { room } from "@/db/schema";
+import { getSession } from "@/lib/auth";
 import { eq, like } from "drizzle-orm";
 import { unstable_noStore } from "next/cache";
 
@@ -18,4 +19,16 @@ export async function getRoom(roomId: string) {
   return await db.query.room.findFirst({
     where: eq(room.id, roomId),
   });
+}
+
+export async function getUserRooms(search: string | undefined) {
+  unstable_noStore();
+  const session = await getSession();
+  if (!session) {
+    throw new Error("No session found");
+  }
+  const rooms = await db.query.room.findMany({
+    where: eq(room.userId, session.user.id),
+  });
+  return rooms;
 }

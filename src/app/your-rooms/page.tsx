@@ -1,20 +1,20 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getRooms } from "@/data-access/rooms";
-import { SearchBar } from "./browse/search-bar";
+import { getUserRooms } from "@/data-access/rooms";
 import { RoomCard } from "@/components/room-card";
+import { SearchBar } from "../browse/search-bar";
 
-export default async function Home({
+export default async function YourRoomsPage({
   searchParams,
 }: {
   searchParams: { search: string };
 }) {
-  const rooms = await getRooms(searchParams.search);
+  const rooms = await getUserRooms(searchParams.search);
 
   return (
     <main className="min-h-screen p-16">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl">Find Dev Rooms</h1>
+        <h1 className="text-3xl">Your Rooms</h1>
         <Button asChild>
           <Link href="/create-room">Create Room</Link>
         </Button>
