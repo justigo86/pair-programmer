@@ -48,9 +48,10 @@ function AccountDropdown() {
 
 export function Header() {
   const session = useSession();
+  const isLoggedId = !!session.data;
 
   return (
-    <header className="bg-gray-200 dark:bg-gray-900 py-4 container mx-auto">
+    <header className="bg-gray-200 dark:bg-gray-900 py-4 container mx-auto z-10 relative">
       <div className="flex items-center justify-between">
         <Link
           href="/"
@@ -60,17 +61,26 @@ export function Header() {
           PairProgrammer
         </Link>
 
-        <nav>
-          <Link className="hover:underline" href={"/your-rooms"}>
-            Your Rooms
-          </Link>
+        <nav className="flex gap-4">
+          {isLoggedId && (
+            <>
+              <Link className="hover:underline" href={"/browse"}>
+                Browse
+              </Link>
+
+              {/* should only show if user is logged in */}
+              <Link className="hover:underline" href={"/your-rooms"}>
+                Your Rooms
+              </Link>
+            </>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
-          {session.data && ( //if user is signed in - account button
+          {isLoggedId && ( //if user is signed in - account button
             <AccountDropdown />
           )}
-          {!session.data && ( //if user is not signed in - sign in button
+          {!isLoggedId && ( //if user is not signed in - sign in button
             <Button variant="link" onClick={() => signIn()}>
               <LogInIcon />
               Sign In
