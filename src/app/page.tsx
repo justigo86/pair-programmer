@@ -3,12 +3,14 @@ import Link from "next/link";
 import { getRooms } from "@/data-access/rooms";
 import { SearchBar } from "./browse/search-bar";
 import { RoomCard } from "@/components/room-card";
+import { unstable_noStore } from "next/cache";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: { search: string };
 }) {
+  unstable_noStore();
   const rooms = await getRooms(searchParams.search);
 
   return (
