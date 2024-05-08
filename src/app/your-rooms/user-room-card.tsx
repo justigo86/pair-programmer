@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Room } from "@/db/schema";
-import { GithubIcon, TrashIcon } from "lucide-react";
+import { GithubIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { TagsList } from "@/components/tags-list";
 import { splitTags } from "@/lib/utils";
 import Link from "next/link";
@@ -31,6 +31,11 @@ export function UserRoomCard({ room }: { room: Room }) {
   return (
     <Card className="min-w-min">
       <CardHeader>
+        <Button className="absolute top-2 right-2" size="icon">
+          <Link href={`/edit-room/${room.id}`}>
+            <PencilIcon />
+          </Link>
+        </Button>
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
