@@ -8,6 +8,7 @@ export default async function EditRoomPage({
   params: { roomId: string };
 }) {
   unstable_noStore();
+  //prevents caching - opt out of static rendering
   const room = await getRoom(params.roomId);
   if (!room) {
     throw new Error("Room not found");
