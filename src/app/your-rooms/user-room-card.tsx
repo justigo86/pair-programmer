@@ -30,8 +30,8 @@ import { deleteRoomAction } from "./actions";
 export function UserRoomCard({ room }: { room: Room }) {
   return (
     <Card className="min-w-min">
-      <CardHeader>
-        <Button className="absolute top-2 right-2" size="icon">
+      <CardHeader className="relative">
+        <Button className="absolute top-3 right-4" size="icon">
           <Link href={`/edit-room/${room.id}`}>
             <PencilIcon />
           </Link>

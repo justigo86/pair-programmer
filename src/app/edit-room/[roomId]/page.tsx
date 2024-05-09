@@ -1,3 +1,4 @@
+import { unstable_noStore } from "next/cache";
 import { EditRoomForm } from "./edit-room-form";
 import { getRoom } from "@/data-access/rooms";
 
@@ -6,6 +7,7 @@ export default async function EditRoomPage({
 }: {
   params: { roomId: string };
 }) {
+  unstable_noStore();
   const room = await getRoom(params.roomId);
   if (!room) {
     throw new Error("Room not found");

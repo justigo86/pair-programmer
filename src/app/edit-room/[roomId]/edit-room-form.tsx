@@ -46,7 +46,6 @@ export function EditRoomForm({ room }: { room: Room }) {
       id: params.roomId as string,
       ...values,
     });
-    router.push("/");
   }
 
   return (

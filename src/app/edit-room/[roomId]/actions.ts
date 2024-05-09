@@ -23,5 +23,7 @@ export async function editRoomAction(roomData: Omit<Room, "userId">) {
   //overrid data with roomData - but also need to hard-code the userId so it canno tbe changed
 
   revalidatePath("/your-rooms");
+  revalidatePath(`/edit-room/${roomData.id}`);
+  //clearing cached room data as it was not clearing between diff rooms
   redirect("/your-rooms");
 }

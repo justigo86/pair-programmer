@@ -61,7 +61,7 @@ export function Header() {
           PairProgrammer
         </Link>
 
-        <nav className="flex gap-4">
+        <nav className="flex gap-8">
           {isLoggedId && (
             <>
               <Link className="hover:underline" href={"/browse"}>
