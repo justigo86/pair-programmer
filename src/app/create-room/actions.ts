@@ -1,9 +1,9 @@
 "use server";
 
 import { Room, room } from "@/db/schema";
-import { db } from "@/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { createRoom } from "@/data-access/rooms";
 
 export async function createRoomAction(roomData: Omit<Room, "id" | "userId">) {
   //omit userId from room because user will enter their userId
@@ -13,8 +13,7 @@ export async function createRoomAction(roomData: Omit<Room, "id" | "userId">) {
     throw new Error("Must be logged in to start a session.");
   }
 
-  await db.insert(room).values({ ...roomData, userId: session.user.id });
-  //userId coming from auth.ts
+  await createRoom(roomData, session.user.id);
 
   revalidatePath("/");
 }

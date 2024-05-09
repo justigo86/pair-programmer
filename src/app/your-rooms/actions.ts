@@ -13,8 +13,8 @@ export async function deleteRoomAction(roomId: string) {
 
   //ensure the user created the room
   const room = await getRoom(roomId);
-  if (!room) {
-    throw new Error("User not authorized to delete room");
+  if (room?.userId !== session.user.id) {
+    throw new Error("User not authorized to edit room");
   }
 
   await deleteRoom(roomId);
