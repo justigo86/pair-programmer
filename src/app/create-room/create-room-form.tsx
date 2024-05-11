@@ -50,7 +50,7 @@ export function CreateRoomForm() {
       description: "Your room has been created.",
     });
     //create room and send the user to the homepage
-    // router.push(`/room/${room.id}`);
+    router.push(`/room/${room.id}`);
   }
 
   return (
