@@ -28,6 +28,9 @@ export default async function YourRoomsPage() {
         <div className="flex flex-col gap-4 justify-center items-center mt-20">
           <Image src="/no-data.svg" width="200" height="200" alt="No Data" />
           <h2 className="text-3xl">No rooms found</h2>
+          <Button asChild>
+            <Link href="/create-room">Create Room</Link>
+          </Button>
         </div>
       )}
     </main>
