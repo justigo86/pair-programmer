@@ -8,41 +8,97 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { HeartHandshakeIcon, LogInIcon, LogOutIcon } from "lucide-react";
+import {
+  DeleteIcon,
+  HeartHandshakeIcon,
+  LogInIcon,
+  LogOutIcon,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import { deleteAccountAction } from "./actions";
+// import { deleteRoomAction } from "./your-rooms/actions";
 
 function AccountDropdown() {
   const session = useSession();
   // const isLoggedId = !!session.data;
   //cast to boolean
+  const [open, setOpen] = useState(false);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="link" className="text-lg">
-          <Avatar className="mr-2 h-8 w-8">
-            <AvatarImage src={session.data?.user?.image ?? ""} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          {session.data?.user?.name}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem
-          onClick={() =>
-            signOut({
-              callbackUrl: "/",
-              // any page in which the user signs out will send home - prevents errors
-            })
-          }
-        >
-          <LogOutIcon className="mr-2" />
-          Sign Out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and any data associated with it.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async () => {
+                //delete account
+                await deleteAccountAction();
+                signOut({ callbackUrl: "/" });
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="link" className="text-lg">
+            <Avatar className="mr-2 h-8 w-8">
+              <AvatarImage src={session.data?.user?.image ?? ""} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            {session.data?.user?.name}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() =>
+              signOut({
+                callbackUrl: "/",
+                // any page in which the user signs out will send home - prevents errors
+              })
+            }
+          >
+            <LogOutIcon className="mr-2" />
+            Sign Out
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <DeleteIcon className="mr-2" />
+            Delete Account
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }
 

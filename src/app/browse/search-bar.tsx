@@ -28,7 +28,7 @@ export function SearchBar() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      search: query.get("search") || "",
+      search: query.get("search") ?? "",
     },
   });
 
@@ -39,9 +39,9 @@ export function SearchBar() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // await createRoomAction(values);
     if (values.search) {
-      router.push(`/?search=${values.search}`);
+      router.push(`/browse?search=${values.search}`);
     } else {
-      router.push("/");
+      router.push("/browse");
     }
   }
   return (

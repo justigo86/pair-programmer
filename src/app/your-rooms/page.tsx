@@ -1,17 +1,13 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getUserRooms } from "@/data-access/rooms";
-import { SearchBar } from "../browse/search-bar";
 import { UserRoomCard } from "./user-room-card";
 import { unstable_noStore } from "next/cache";
+import Image from "next/image";
 
-export default async function YourRoomsPage({
-  searchParams,
-}: {
-  searchParams: { search: string };
-}) {
+export default async function YourRoomsPage() {
   unstable_noStore();
-  const rooms = await getUserRooms(searchParams.search);
+  const rooms = await getUserRooms();
 
   return (
     <main className="min-h-screen p-16">
@@ -22,15 +18,18 @@ export default async function YourRoomsPage({
         </Button>
       </div>
 
-      <div className="mb-10">
-        <SearchBar />
-      </div>
-
       <div className="grid grid-cols-3 gap-4">
         {rooms.map((room) => {
           return <UserRoomCard key={room.id} room={room} />;
         })}
       </div>
+
+      {rooms.length === 0 && (
+        <div className="flex flex-col gap-4 justify-center items-center mt-20">
+          <Image src="/no-data.svg" width="200" height="200" alt="No Data" />
+          <h2 className="text-3xl">No rooms found</h2>
+        </div>
+      )}
     </main>
   );
 }

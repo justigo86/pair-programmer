@@ -22,7 +22,7 @@ export async function getRoom(roomId: string) {
   });
 }
 
-export async function getUserRooms(search: string | undefined) {
+export async function getUserRooms() {
   // unstable_noStore();
   const session = await getSession();
   if (!session) {
