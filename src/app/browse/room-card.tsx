@@ -19,7 +19,7 @@ export function RoomCard({ room }: { room: Room }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{room.name}</CardTitle>
+        <CardTitle className="truncate leading-normal">{room.name}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">

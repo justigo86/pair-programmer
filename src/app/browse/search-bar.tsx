@@ -79,7 +79,7 @@ export function SearchBar() {
             <CircleX />
           </Button>
         )}
-        <Button type="submit" className="w-fit md:col-span-2">
+        <Button type="submit" className="w-fit md:w-auto md:col-span-2">
           <SearchIcon className="mr-2" />
           Search
         </Button>
