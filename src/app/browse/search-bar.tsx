@@ -46,16 +46,19 @@ export function SearchBar() {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center md:grid md:grid-cols-10 gap-1 md:gap-4 w-full"
+      >
         <FormField
           control={form.control}
           name="search"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full md:col-span-8">
               <FormControl>
                 <Input
                   {...field}
-                  className="w-[36rem]"
+                  className="w-full"
                   placeholder="Filter rooms by keywords, (e.g., typescript, nextjs, etc.)"
                 />
               </FormControl>
@@ -76,7 +79,7 @@ export function SearchBar() {
             <CircleX />
           </Button>
         )}
-        <Button type="submit">
+        <Button type="submit" className="w-fit md:col-span-2">
           <SearchIcon className="mr-2" />
           Search
         </Button>

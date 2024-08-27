@@ -15,7 +15,7 @@ export default async function Home({
   const rooms = await getRooms(searchParams.search);
 
   return (
-    <main className="min-h-screen p-16">
+    <main className="min-h-screen pt-12 md:p-16">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl">Find Dev Rooms</h1>
         <Button asChild>
@@ -27,7 +27,7 @@ export default async function Home({
         <SearchBar />
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols md:grid-cols-2 lg:grid-cols-3 gap-4">
         {rooms.map((room) => {
           return <RoomCard key={room.id} room={room} />;
         })}
