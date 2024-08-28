@@ -141,17 +141,17 @@ function HamburgerMenu() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link href="/" className="flex hover:underline">
               Home
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link className="hover:underline" href={"/browse"}>
               Browse
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link className="hover:underline" href={"/your-rooms"}>
               Your Rooms
             </Link>
