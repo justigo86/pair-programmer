@@ -106,9 +106,9 @@ function HamburgerMenu() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="MOBILE-MENU flex flex-col md:hidden">
-      <div>
-        <div>
+    <section className="flex flex-col md:hidden">
+      <DropdownMenu onOpenChange={() => setOpen((prev) => !prev)}>
+        <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,21 @@ function HamburgerMenu() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-6 w-6"
+              className={open ? "block h-8 w-8" : "hidden"}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className={open ? "hidden" : "block h-8 w-8"}
             >
               <path
                 strokeLinecap="round"
@@ -125,25 +139,25 @@ function HamburgerMenu() {
               />
             </svg>
           </Button>
-          <ul className="NAVIGATION-MOBILE-OPEN flex flex-col gap-2">
-            <li>
-              <Link href="/" className="flex hover:underline">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link className="hover:underline" href={"/browse"}>
-                Browse
-              </Link>
-            </li>
-            <li>
-              <Link className="hover:underline" href={"/your-rooms"}>
-                Your Rooms
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem>
+            <Link href="/" className="flex hover:underline">
+              Home
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link className="hover:underline" href={"/browse"}>
+              Browse
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link className="hover:underline" href={"/your-rooms"}>
+              Your Rooms
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </section>
   );
 }
@@ -153,19 +167,16 @@ export function Header() {
   const isLoggedId = !!session.data;
 
   return (
-    <header className="bg-gray-200 dark:bg-transparent py-4 z-10 relative">
-      <div className="container mx-auto flex items-center justify-between">
-        <Link
-          href="/"
-          className="hidden md:flex items-center gap-2 text-xl hover:underline"
-        >
+    <header className="bg-transparent py-4 z-10 relative">
+      <div className="container mx-auto flex justify-between">
+        <Link href="/" className="hidden md:flex gap-2 text-xl hover:underline">
           <HeartHandshakeIcon />
           PairProgrammer
         </Link>
 
         <HamburgerMenu />
 
-        <nav className="hidden md:flex gap-8">
+        <nav className="hidden md:flex gap-8 items-center">
           {isLoggedId && (
             <>
               <Link className="hover:underline" href={"/browse"}>
@@ -180,7 +191,7 @@ export function Header() {
           )}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex gap-2">
           {isLoggedId && ( //if user is signed in - account button
             <AccountDropdown />
           )}
