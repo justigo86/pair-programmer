@@ -106,15 +106,9 @@ function HamburgerMenu() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="MOBILE-MENU flex lg:hidden">
-      <div className="HAMBURGER-ICON space-y-2">
-        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-      </div>
-
+    <section className="MOBILE-MENU flex flex-col md:hidden">
       <div>
-        <div className="absolute top-0 right-0 px-8 py-8">
+        <div>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -130,18 +124,24 @@ function HamburgerMenu() {
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             </svg>
-            <ul className="NAVIGATION-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
-              <li className="border-b border-gray-400 my-8 uppercase">
-                <a href="/about">About</a>
-              </li>
-              <li className="border-b border-gray-400 my-8 uppercase">
-                <a href="/portfolio">Portfolio</a>
-              </li>
-              <li className="border-b border-gray-400 my-8 uppercase">
-                <a href="/contact">Contact</a>
-              </li>
-            </ul>
           </Button>
+          <ul className="NAVIGATION-MOBILE-OPEN flex flex-col gap-2">
+            <li>
+              <Link href="/" className="flex hover:underline">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:underline" href={"/browse"}>
+                Browse
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:underline" href={"/your-rooms"}>
+                Your Rooms
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -157,13 +157,15 @@ export function Header() {
       <div className="container mx-auto flex items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 text-xl hover:underline"
+          className="hidden md:flex items-center gap-2 text-xl hover:underline"
         >
           <HeartHandshakeIcon />
           PairProgrammer
         </Link>
 
-        <nav className="flex gap-8">
+        <HamburgerMenu />
+
+        <nav className="hidden md:flex gap-8">
           {isLoggedId && (
             <>
               <Link className="hover:underline" href={"/browse"}>
