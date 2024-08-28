@@ -35,7 +35,7 @@ import { deleteAccountAction } from "./actions";
 function AccountDropdown() {
   const session = useSession();
   // const isLoggedId = !!session.data;
-  //cast to boolean
+  // cast to boolean
   const [open, setOpen] = useState(false);
 
   return (
@@ -102,12 +102,58 @@ function AccountDropdown() {
   );
 }
 
+function HamburgerMenu() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <section className="MOBILE-MENU flex lg:hidden">
+      <div className="HAMBURGER-ICON space-y-2">
+        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
+        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
+        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
+      </div>
+
+      <div>
+        <div className="absolute top-0 right-0 px-8 py-8">
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+            <ul className="NAVIGATION-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
+              <li className="border-b border-gray-400 my-8 uppercase">
+                <a href="/about">About</a>
+              </li>
+              <li className="border-b border-gray-400 my-8 uppercase">
+                <a href="/portfolio">Portfolio</a>
+              </li>
+              <li className="border-b border-gray-400 my-8 uppercase">
+                <a href="/contact">Contact</a>
+              </li>
+            </ul>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Header() {
   const session = useSession();
   const isLoggedId = !!session.data;
 
   return (
-    <header className="bg-gray-200 dark:bg-gray-900 py-4 z-10 relative">
+    <header className="bg-gray-200 dark:bg-transparent py-4 z-10 relative">
       <div className="container mx-auto flex items-center justify-between">
         <Link
           href="/"

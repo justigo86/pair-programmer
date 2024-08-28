@@ -1,5 +1,4 @@
 import { HeartHandshakeIcon } from "lucide-react";
-import { useState } from "react";
 
 export default function LandingPage() {
   return (
