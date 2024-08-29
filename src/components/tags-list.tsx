@@ -15,7 +15,7 @@ export function TagsList({ tags }: { tags: string[] }) {
           key={tag}
           className={cn(badgeVariants())}
           //class info borrowed from shadCN /components/ui/badge.tsx
-          onClick={() => router.push(`/?search=${tag}`)}
+          onClick={() => router.push(`/browse?search=${tag}`)}
         >
           {tag}
         </button>
